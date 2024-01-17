@@ -5,6 +5,7 @@ export async function getStaticPaths() {
     `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.API_KEY}`
   );
   const res = await data.json();
+  
   return {
     paths: res.results.map((movie) => ({
       params: { movie: String(movie.id) },
