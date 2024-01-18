@@ -1,24 +1,35 @@
 import Image from "next/image";
 
 export async function getStaticPaths() {
-  const data = await fetch(
-    `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.API_KEY}`
-  );
-  const res = await data.json();
-  
-  return {
-    paths: res.results.map((movie) => ({
-      params: { movie: String(movie.id) },
-    })),
-    fallback: false,
-  };
+  try {
+    const data = await fetch(
+      "https://api.themoviedb.org/3/movie/popular?api_key=dce76334c2564193f3f9aad8edb50238"
+    );
+    const res = await data.json();
+
+    console.log(res); // Log the response to check the data
+
+    if (!res.results) {
+      throw new Error("No results in API response");
+    }
+
+    return {
+      paths: res.results.map((movie) => ({
+        params: { movie: String(movie.id) },
+      })),
+      fallback: false,
+    };
+  } catch (error) {
+    console.error(error);
+    return { paths: [], fallback: false };
+  }
 }
 
 export async function getStaticProps({ params }) {
   const { movie } = params;
   const imagePath = "https://image.tmdb.org/t/p/original";
   const data = await fetch(
-    `https://api.themoviedb.org/3/movie/${movie}?api_key=${process.env.API_KEY}`
+    `https://api.themoviedb.org/3/movie/${movie}?api_key=dce76334c2564193f3f9aad8edb50238`
   );
   const res = await data.json();
   return {
@@ -27,7 +38,7 @@ export async function getStaticProps({ params }) {
 }
 
 export default function MovieDetail({ movieData, imagePath }) {
-  console.log(movieData)
+  console.log(movieData);
   return (
     <div className="max-w-4xl m-auto">
       <div>
