@@ -7,8 +7,6 @@ export async function getStaticPaths() {
     );
     const res = await data.json();
 
-    console.log(res); // Log the response to check the data
-
     if (!res.results) {
       throw new Error("No results in API response");
     }
