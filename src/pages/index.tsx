@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
+// import Link from "next/link";
+import { Montserrat } from "next/font/google";
+import Movie from "../components/Movie";
+
+const montserrat = Montserrat({
+  weight: ["400", "700", "900"],
+  subsets: ["latin"],
+  variable: "--font-montserrat",
+});
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
@@ -22,14 +30,20 @@ const Movies = () => {
 
   return (
     <main>
-      {movies.map((movie: any) => (
-        <Link href={`/${movie.id}`} key={movie.id}>
-          <div key={movie.id}>
-            <h2>{movie.title}</h2>
-            {/* Render other movie details here */}
-          </div>
-        </Link>
-      ))}
+      <main>
+        <div className="grid gap-16 grid-cols-fluid">
+          {movies.map((movie: any) => (
+            <Movie
+              key={movie.id}
+              id={movie.id}
+              title={movie.original_title}
+              poster_path={movie.poster_path}
+              release_date={movie.release_date}
+              rate={movie.vote_count}
+            />
+          ))}
+        </div>
+      </main>
     </main>
   );
 };

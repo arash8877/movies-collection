@@ -37,7 +37,7 @@ export async function getStaticProps({ params }) {
 
 export default function MovieDetail({ movieData, imagePath }) {
   return (
-    <div className="max-w-4xl m-auto">
+    <div className="max-w-4xl m-auto" >
       <div>
         <h2 className="text-2xl">{movieData.title}</h2>
         <h2 className="text-lg">{movieData.release_date}</h2>
