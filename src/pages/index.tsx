@@ -1,14 +1,37 @@
-import Image from "next/image";
-import { Inter } from "next/font/google";
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
 
-const inter = Inter({ subsets: ["latin"] });
+const Movies = () => {
+  const [movies, setMovies] = useState([]);
 
-export default function Home() {
+  useEffect(() => {
+    const fetchMovies = async () => {
+      const response = await fetch(
+        `https://api.themoviedb.org/3/movie/popular?api_key=dce76334c2564193f3f9aad8edb50238`
+      );
+      const data = await response.json();
+      setMovies(data.results);
+    };
+
+    fetchMovies();
+  }, []);
+
+  if (!movies) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      this is home
+    <main>
+      {movies.map((movie: any) => (
+        <Link href={`/${movie.id}`} key={movie.id}>
+          <div key={movie.id}>
+            <h2>{movie.title}</h2>
+            {/* Render other movie details here */}
+          </div>
+        </Link>
+      ))}
     </main>
   );
-}
+};
+
+export default Movies;
