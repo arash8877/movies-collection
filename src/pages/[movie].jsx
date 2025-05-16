@@ -13,7 +13,7 @@ export async function getStaticPaths() {
 
     return {
       paths: res.results.slice(0, 10).map((movie) => ({
-        params: { movie: String(movie.id) },
+        params: { id: String(movie.id) },
       })),
       fallback: false,
     };
